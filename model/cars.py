@@ -13,37 +13,37 @@ class Car(db.Model):
 
     # Define the User schema with "vars" from object
     id = db.Column(db.Integer, primary_key=True)
-    _name = db.Column(db.String(255), unique=False, nullable=False)
-    _color = db.Column(db.String(255), unique=False, nullable=False)
+    _type = db.Column(db.String(255), unique=False, nullable=False)
+    _model = db.Column(db.String(255), unique=False, nullable=False)
     _price = db.Column(db.Integer, unique=False, nullable=False)
    
 
     # constructor of a User object, initializes the instance variables within object (self)
-    def __init__(self, name, color, price):
-        self._name = name    # variables with self prefix become part of the object, 
-        self._color = color
+    def __init__(self, type, model, price):
+        self._type = type    # variables with self prefix become part of the object, 
+        self._model = model
         self._price = price
         self.determine_value()
 
-    # gets the name of the manufacturer or the car
+    # gets the type of the manufacturer or the car
     @property
-    def name(self):
-        return self._name
+    def type(self):
+        return self._type
     
-    # a setter function, allows name to be updated after initial object creation
-    @name.setter
-    def name(self, name):
-        self._name = name
+    # a setter function, allows type to be updated after initial object creation
+    @type.setter
+    def type(self, type):
+        self._type = type
     
-    # a color getter
+    # a model getter
     @property
-    def color(self):
-        return self._color
+    def model(self):
+        return self._model
 
-    # a setter function to set the car's color
-    @color.setter
-    def color(self, color):
-        self._color = color
+    # a setter function to set the car's model
+    @model.setter
+    def model(self, model):
+        self._model = model
     
      # a price getter
     @property
@@ -91,20 +91,20 @@ class Car(db.Model):
     def read(self):
         return {
             "id": self.id,
-            "name" : self.name,
-            "color" : self.color,
+            "name" : self.type,
+            "color" : self.model,
             "price" : self.price,
             "value" : self.value
         }
 
     # CRUD update: updates user name, password, phone
     # returns self
-    def update(self, name="", color="", price=""):
+    def update(self, type="", model="", price=""):
         """only updates values with length"""
-        if len(name) > 0:
-            self.name = name
-        if len(color) > 0:
-            self.color = color
+        if len(type) > 0:
+            self.type = type
+        if len(model) > 0:
+            self.model = model
         self.price = price
         db.session.commit()
         return self
@@ -125,12 +125,11 @@ def initCars():
     """Create database and tables"""
     db.create_all()
     """Tester data for table"""
-    u1 = Car(name='Thomas Edison', color='toby', price=7)
-    u2 = Car(name='Nicholas Tesla', color='niko', price=7)
-    u3 = Car(name='Alexander Graham Bell', color='lex', price=7)
+    u1 = Car(type='ice', model='truck', price=10000)
+    u2 = Car(type='electric', model='suv', price=50000) 
 
 
-    cars = [u1, u2, u3]
+    cars = [u1, u2]
 
     """Builds sample user/note(s) data"""
     for car in cars:
