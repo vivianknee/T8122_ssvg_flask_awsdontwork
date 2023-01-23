@@ -16,23 +16,20 @@ class CarAPI:
             ''' Read data for json body '''
             body = request.get_json()
             
-            ''' Avoid garbage in, error checking '''
-            # validate type
             type = body.get('type')
             if type is None or len(type) < 2:
                 return {'message': f'type is missing, or is less than 2 characters'}, 210
-            # validate uid
+             
             model = body.get('model')
             if model is None or len(model) < 2:
                 return {'message': f'car ID is missing, or is less than 2 characters'}, 210
-            # look for password and dob
-            price = body.get('price') 
-
+            
+            price = body.get(price) 
+         
             ''' #1: Key code block, setup car OBJECT '''
             co = Car(type=type, 
                       model=model,
                       price=price)
-            
             
             ''' #2: Key Code block to add car to database '''
             # create car in database
