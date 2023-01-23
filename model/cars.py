@@ -23,7 +23,7 @@ class Car(db.Model):
         self._type = type    # variables with self prefix become part of the object, 
         self._model = model
         self._price = price
-        self.determine_value()
+        #self.determine_value()
 
     # gets the type of the manufacturer or the car
     @property
@@ -54,11 +54,11 @@ class Car(db.Model):
     @price.setter
     def price(self, price):
         self._price = price
-        self.determine_value() #calls function whenever price of car changes 
+        #self.determine_value() #calls function whenever price of car changes 
          
-    @property
-    def value(self):
-        return self._value
+    # @property
+    # def value(self):
+    #     return self._value
     
     #determines car value based on price and stores it by assigning it to object
     def determine_value(self):
@@ -91,10 +91,10 @@ class Car(db.Model):
     def read(self):
         return {
             "id": self.id,
-            "name" : self.type,
-            "color" : self.model,
-            "price" : self.price,
-            "value" : self.value
+            "type" : self.type,
+            "model" : self.model,
+            "price" : self.price
+           # "value" : self.value
         }
 
     # CRUD update: updates user name, password, phone
@@ -125,11 +125,11 @@ def initCars():
     """Create database and tables"""
     db.create_all()
     """Tester data for table"""
-    u1 = Car(type='ice', model='truck', price=10000)
-    u2 = Car(type='electric', model='suv', price=50000) 
+    c1 = Car(type='ice', model='truck', price=10000)
+    c2 = Car(type='electric', model='suv', price=50000) 
 
 
-    cars = [u1, u2]
+    cars = [c1, c2]
 
     """Builds sample user/note(s) data"""
     for car in cars:
@@ -138,5 +138,5 @@ def initCars():
         except IntegrityError:
             '''fails with bad or duplicate data'''
             db.session.remove()
-            print(f"Records exist, duplicate email, or error: {car.uid}")
+            print(f"Records exist, duplicate email, or error: {car.model}")
 
