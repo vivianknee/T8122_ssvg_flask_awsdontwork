@@ -3,11 +3,13 @@
         "astype",
         "backref",
         "BASI",
+        "executemany",
         "haha",
         "Hedy",
         "jsonify",
         "Lemarr",
         "niko",
+        "sqlalchemy",
         "werkzeug"
     ]
 }

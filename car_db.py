@@ -12,8 +12,8 @@ def create_db(db_name):
 def create_car_table(cur, conn):
     cur.execute("""CREATE TABLE IF NOT EXISTS cars(
     carid INT PRIMARY KEY,
+    engine TEXT,
     type TEXT,
-    model TEXT,
     price INT);
     """)
     conn.commit()
