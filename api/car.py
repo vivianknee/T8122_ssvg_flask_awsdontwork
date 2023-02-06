@@ -20,15 +20,15 @@ class CarAPI:
             if type is None or len(type) < 2:
                 return {'message': f'type is missing, or is less than 2 characters'}, 210
              
-            model = body.get('model')
-            if model is None or len(model) < 2:
+            engine = body.get('engine')
+            if engine is None or len(engine) < 2:
                 return {'message': f'car ID is missing, or is less than 2 characters'}, 210
             
             price = body.get(price) 
          
             ''' #1: Key code block, setup car OBJECT '''
             co = Car(type=type, 
-                      model=model,
+                      engine=engine,
                       price=price)
             
             ''' #2: Key Code block to add car to database '''
@@ -38,7 +38,7 @@ class CarAPI:
             if car:
                 return jsonify(car.read())
             # failure returns error
-            return {'message': f'Processed {type}, either a format error or model {model} is duplicate'}, 210
+            return {'message': f'Processed {type}, either a format error or engine {engine} is duplicate'}, 210
 
     class _Read(Resource):
         def get(self):

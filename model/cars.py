@@ -12,17 +12,41 @@ class Car(db.Model):
 
     # Define the User schema with "vars" from object
     id = db.Column(db.Integer, unique=True, primary_key=True)
+    _brand = db.Column(db.String(255), unique=False, nullable=False)
+    _color = db.Column(db.Integer, unique=False, nullable=False)
     _type = db.Column(db.String(255), unique=False, nullable=False)
-    _engine = db.Column(db.String(255), unique=False, nullable=False)
+    _powersource = db.Column(db.String(255), unique=False, nullable=False)
     _price = db.Column(db.Integer, unique=False, nullable=False)
    
 
     # constructor of a User object, initializes the instance variables within object (self)
-    def __init__(self, type, engine, price):
+    def __init__(self, brand, color, type, powersource, price):
         self._type = type    # variables with self prefix become part of the object, 
-        self._engine = engine
+        self._brand = brand
+        self._color = color
+        self._powersource = powersource
         self._price = price
         #self.determine_value()
+
+    # gets the brand the car
+    @property
+    def brand(self):
+        return self._brand
+    
+    # a setter function, allows brand to be updated after initial object creation
+    @brand.setter
+    def brand(self, brand):
+        self._brand = brand
+
+     # gets the color of the car
+    @property
+    def color(self):
+        return self._color
+    
+    # a setter function, allows color to be updated after initial object creation
+    @color.setter
+    def color(self, color):
+        self._color = color
 
     # gets the type of the manufacturer or the car
     @property
@@ -34,15 +58,15 @@ class Car(db.Model):
     def type(self, type):
         self._type = type
     
-    # a engine getter
+    # a powersource getter
     @property
-    def engine(self):
-        return self._engine
+    def powersource(self):
+        return self._powersource
 
-    # a setter function to set the car's engine
-    @engine.setter
-    def engine(self, engine):
-        self._engine = engine
+    # a setter function to set the car's powersource
+    @powersource.setter
+    def powersource(self, powersource):
+        self._powersource = powersource
     
      # a price getter
     @property
@@ -90,20 +114,26 @@ class Car(db.Model):
     def read(self):
         return {
             "id": self.id,
+            "brand" : self.brand,
+            "color" : self.color,
             "type" : self.type,
-            "engine" : self.engine,
+            "powersource" : self.powersource,
             "price" : self.price
            # "value" : self.value
         }
 
     # CRUD update: updates user name, password, phone
     # returns self
-    def update(self, engine="", type="", price=""):
+    def update(self, brand="", color="", powersource="", type="", price=""):
         """only updates values with length"""
+        if len(brand) > 0:
+            self.brand = brand
+        if len(color) > 0:
+            self.color = color
         if len(type) > 0:
             self.type = type
-        if len(engine) > 0:
-            self.engine = engine
+        if len(powersource) > 0:
+            self.powersource = powersource
         self.price = price
         db.session.commit()
         return self
@@ -123,9 +153,16 @@ class Car(db.Model):
 def initCars():
     """Create database and tables"""
     db.create_all()
+
+    try:
+        db.session.query(Car).delete()
+        db.session.commit()
+    except:
+        db.session.rollback()
+
     """Tester data for table"""
-    c1 = Car(engine='ice', type='truck', price=10000)
-    c2 = Car(engine='electric', type='suv', price=50000) 
+    c1 = Car(brand='hundai', color='red', powersource='ice', type='truck', price=10000)
+    c2 = Car(brand='toyota', color='red', powersource='electric', type='suv', price=50000) 
 
 
     cars = [c1, c2]

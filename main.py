@@ -40,7 +40,7 @@ def stub():
 
 @app.before_first_request
 def activate_job():
-    initJokes()
+    #initJokes()
     initUsers()
     initCars()
 
