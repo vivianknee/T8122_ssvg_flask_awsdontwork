@@ -161,8 +161,8 @@ def initCars():
         db.session.rollback()
 
     """Tester data for table"""
-    c1 = Car(brand='hundai', color='red', powersource='ice', type='truck', price=10000)
-    c2 = Car(brand='toyota', color='red', powersource='electric', type='suv', price=50000) 
+    c1 = Car(brand='hundai', color='red', powersource='ice', type='truck', price='1')
+    c2 = Car(brand='toyota', color='red', powersource='electric', type='suv', price='3') 
 
 
     cars = [c1, c2]
