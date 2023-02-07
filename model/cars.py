@@ -190,7 +190,7 @@ def initCars():
     c27 = Car(brand='Tesla', color='blue', powersource='electric', type='suv', price_range='4')
     c28 = Car(brand='Hummer', color='white', powersource='electric', type='truck', price_range='3')
     c29 = Car(brand='Ford', color='blue', powersource='electric', type='truck', price_range='4')
-    c30 = Car(brand='Audi', color='black', powersource='electric', type='suv', price_range='3') 
+    c30 = Car(brand='Audi', color='black', powersource='electric', type='suv', price_range='4') 
     c31 = Car(brand='Porsche', color='red', powersource='electric', type='sports', price_range='4')
     c32 = Car(brand='Mercedes', color='silver', powersource='electric', type='sedan', price_range='4')
     c33 = Car(brand='Mazda', color='silver', powersource='electric', type='suv', price_range='2')
