@@ -16,13 +16,21 @@ class CarAPI:
             ''' Read data for json body '''
             body = request.get_json()
             
+            brand = body.get('brand')
+            if brand is None or len(brand) < 2:
+                return {'message': f'brand is missing, or is less than 2 characters'}, 210
+             
+            color = body.get('color')
+            if color is None or len(color) < 2:
+                return {'message': f'color is missing, or is less than 2 characters'}, 210
+            
             type = body.get('type')
             if type is None or len(type) < 2:
                 return {'message': f'type is missing, or is less than 2 characters'}, 210
              
-            engine = body.get('engine')
-            if engine is None or len(engine) < 2:
-                return {'message': f'car ID is missing, or is less than 2 characters'}, 210
+            powersource = body.get('powersource')
+            if powersource is None or len(powersource) < 2:
+                return {'message': f'powersource is missing, or is less than 2 characters'}, 210
             
             price = body.get(price) 
          
