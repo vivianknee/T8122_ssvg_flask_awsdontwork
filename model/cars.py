@@ -7,6 +7,7 @@ from __init__ import app, db
 from sqlalchemy.exc import IntegrityError
 
 
+
 class Car(db.Model):
     __tablename__ = 'cars'  # table name is plural, class name is singular
 
@@ -151,60 +152,62 @@ class Car(db.Model):
 
 # Builds working data for testing
 def initCars():
-    """Create database and tables"""
-    db.create_all()
+    with app.app_context():
+        """Create database and tables"""
+        db.init_app(app)
+        db.create_all()
 
-    try:
-        db.session.query(Car).delete()
-        db.session.commit()
-    except:
-        db.session.rollback()
-
-    """Tester data for table"""
-    c1 = Car(brand='Acura', color='gray', powersource='ice', type='suv', price_range='2')
-    c2 = Car(brand='Hyundai', color='red', powersource='ice', type='sedan', price_range='1') 
-    c3 = Car(brand='Mazda', color='white', powersource='ice', type='sedan', price_range='1')
-    c4 = Car(brand='Honda', color='gray', powersource='ice', type='suv', price_range='1')
-    c5 = Car(brand='Dodge', color='black', powersource='ice', type='suv', price_range='2')
-    c6 = Car(brand='Toyota', color='white', powersource='ice', type='truck', price_range='2') 
-    c7 = Car(brand='Hyundai', color='blue', powersource='ice', type='sedan', price_range='1')
-    c8 = Car(brand='Chevrolet', color='gray', powersource='ice', type='truck', price_range='2')
-    c9 = Car(brand='Jeep', color='gray', powersource='ice', type='suv', price_range='1')
-    c10 = Car(brand='Nissan', color='silver', powersource='ice', type='sedan', price_range='1') 
-    c11 = Car(brand='Lexus', color='black', powersource='ice', type='sedan', price_range='2')
-    c12 = Car(brand='Kia', color='red', powersource='ice', type='suv', price_range='1')
-    c13 = Car(brand='Mazda', color='red', powersource='ice', type='truck', price_range='2')
-    c14 = Car(brand='Ford', color='white', powersource='ice', type='sedan', price_range='2') 
-    c15 = Car(brand='Kia', color='red', powersource='ice', type='truck', price_range='2')
-    c16 = Car(brand='Ford', color='gray', powersource='ice', type='suv', price_range='1')
-    c17 = Car(brand='Jeep', color='red', powersource='ice', type='truck', price_range='1')
-    c18 = Car(brand='Toyota', color='red', powersource='electric', type='suv', price_range='3') 
-    c19 = Car(brand='Kia', color='red', powersource='ice', type='truck', price_range='1')
-    c20 = Car(brand='Honda', color='white', powersource='ice', type='suv', price_range='1')
-    c21 = Car(brand='Hyundai', color='white', powersource='ice', type='sedan', price_range='1')
-    c22 = Car(brand='Chevrolet', color='white', powersource='ice', type='suv', price_range='3') 
-    c23 = Car(brand='Jeep', color='white', powersource='ice', type='suv', price_range='3')
-    c24 = Car(brand='BMW', color='gray', powersource='ice', type='sedan', price_range='4')
-    c25 = Car(brand='Ferarri', color='yellow', powersource='ice', type='sports', price_range='4')
-    c26 = Car(brand='Tesla', color='red', powersource='electric', type='suv', price_range='4') 
-    c27 = Car(brand='Tesla', color='blue', powersource='electric', type='suv', price_range='4')
-    c28 = Car(brand='Ford', color='white', powersource='electric', type='truck', price_range='3')
-    c29 = Car(brand='Ford', color='blue', powersource='electric', type='truck', price_range='4')
-    c30 = Car(brand='Audi', color='black', powersource='electric', type='suv', price_range='4') 
-    c31 = Car(brand='Porsche', color='red', powersource='electric', type='sports', price_range='4')
-    c32 = Car(brand='Mercedes', color='silver', powersource='electric', type='sedan', price_range='4')
-    c33 = Car(brand='Mazda', color='silver', powersource='electric', type='suv', price_range='2')
-    c34 = Car(brand='Nissan', color='blue', powersource='electric', type='suv', price_range='2') 
-    c35 = Car(brand='Subaru', color='red', powersource='electric', type='suv', price_range='2')
-
-    cars = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, c34, c35]
-
-    """Builds sample car/note(s) data"""
-    for car in cars:
         try:
-            car.create()
-        except IntegrityError:
-            '''fails with bad or duplicate data'''
-            db.session.remove()
-            print(f"Records exist, duplicate email, or error: {car.model}")
+            db.session.query(Car).delete()
+            db.session.commit()
+        except:
+            db.session.rollback()
+
+        """Tester data for table"""
+        c1 = Car(brand='Acura', color='gray', powersource='ice', type='suv', price_range='2')
+        c2 = Car(brand='Hyundai', color='red', powersource='ice', type='sedan', price_range='1') 
+        c3 = Car(brand='Mazda', color='white', powersource='ice', type='sedan', price_range='1')
+        c4 = Car(brand='Honda', color='gray', powersource='ice', type='suv', price_range='1')
+        c5 = Car(brand='Dodge', color='black', powersource='ice', type='suv', price_range='2')
+        c6 = Car(brand='Toyota', color='white', powersource='ice', type='truck', price_range='2') 
+        c7 = Car(brand='Hyundai', color='blue', powersource='ice', type='sedan', price_range='1')
+        c8 = Car(brand='Chevrolet', color='gray', powersource='ice', type='truck', price_range='2')
+        c9 = Car(brand='Jeep', color='gray', powersource='ice', type='suv', price_range='1')
+        c10 = Car(brand='Nissan', color='silver', powersource='ice', type='sedan', price_range='1') 
+        c11 = Car(brand='Lexus', color='black', powersource='ice', type='sedan', price_range='2')
+        c12 = Car(brand='Kia', color='red', powersource='ice', type='suv', price_range='1')
+        c13 = Car(brand='Mazda', color='red', powersource='ice', type='truck', price_range='2')
+        c14 = Car(brand='Ford', color='white', powersource='ice', type='sedan', price_range='2') 
+        c15 = Car(brand='Kia', color='red', powersource='ice', type='truck', price_range='2')
+        c16 = Car(brand='Ford', color='gray', powersource='ice', type='suv', price_range='1')
+        c17 = Car(brand='Jeep', color='red', powersource='ice', type='truck', price_range='1')
+        c18 = Car(brand='Toyota', color='red', powersource='electric', type='suv', price_range='3') 
+        c19 = Car(brand='Kia', color='red', powersource='ice', type='truck', price_range='1')
+        c20 = Car(brand='Honda', color='white', powersource='ice', type='suv', price_range='1')
+        c21 = Car(brand='Hyundai', color='white', powersource='ice', type='sedan', price_range='1')
+        c22 = Car(brand='Chevrolet', color='white', powersource='ice', type='suv', price_range='3') 
+        c23 = Car(brand='Jeep', color='white', powersource='ice', type='suv', price_range='3')
+        c24 = Car(brand='BMW', color='gray', powersource='ice', type='sedan', price_range='4')
+        c25 = Car(brand='Ferarri', color='yellow', powersource='ice', type='sports', price_range='4')
+        c26 = Car(brand='Tesla', color='red', powersource='electric', type='suv', price_range='4') 
+        c27 = Car(brand='Tesla', color='blue', powersource='electric', type='suv', price_range='4')
+        c28 = Car(brand='Ford', color='white', powersource='electric', type='truck', price_range='3')
+        c29 = Car(brand='Ford', color='blue', powersource='electric', type='truck', price_range='4')
+        c30 = Car(brand='Audi', color='black', powersource='electric', type='suv', price_range='4') 
+        c31 = Car(brand='Porsche', color='red', powersource='electric', type='sports', price_range='4')
+        c32 = Car(brand='Mercedes', color='silver', powersource='electric', type='sedan', price_range='4')
+        c33 = Car(brand='Mazda', color='silver', powersource='electric', type='suv', price_range='2')
+        c34 = Car(brand='Nissan', color='blue', powersource='electric', type='suv', price_range='2') 
+        c35 = Car(brand='Subaru', color='red', powersource='electric', type='suv', price_range='2')
+
+        cars = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, c34, c35]
+
+        """Builds sample car/note(s) data"""
+        for car in cars:
+            try:
+                car.create()
+            except IntegrityError:
+                '''fails with bad or duplicate data'''
+                db.session.remove()
+                print(f"Records exist, duplicate email, or error: {car.model}")
 
