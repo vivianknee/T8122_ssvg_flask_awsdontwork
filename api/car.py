@@ -34,12 +34,14 @@ class CarAPI:
             
             price_range = body.get(price_range) 
             if price_range is None or len(price_range) < 2:
-                return {'message': f'powersource is missing, or is less than 2 characters'}, 210
+                return {'message': f'price_range is missing, or is less than 2 characters'}, 210
          
             ''' #1: Key code block, setup car OBJECT '''
-            co = Car(type=type, 
-                      engine=engine,
-                      price=price)
+            co = Car(brand=brand,
+                      color=color,
+                      type=type, 
+                      powersource=powersource,
+                      price_range=price_range)
             
             ''' #2: Key Code block to add car to database '''
             # create car in database
@@ -48,7 +50,7 @@ class CarAPI:
             if car:
                 return jsonify(car.read())
             # failure returns error
-            return {'message': f'Processed {type}, either a format error or engine {engine} is duplicate'}, 210
+            return {'message': f'Processed {type}, either a format error or powersource {powersource} is duplicate'}, 210
 
     class _Read(Resource):
         def get(self):
