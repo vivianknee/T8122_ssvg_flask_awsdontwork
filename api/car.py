@@ -1,6 +1,5 @@
 from flask import Blueprint, request, jsonify
 from flask_restful import Api, Resource # used for REST API building
-from datetime import datetime
 
 from model.cars import Car
 
@@ -33,7 +32,7 @@ class CarAPI:
                 return {'message': f'powersource is missing, or is less than 2 characters'}, 210
             
             price_range = body.get(price_range) 
-            if price_range is None or len(price_range) < 2:
+            if price_range is None or len(price_range) < 1:
                 return {'message': f'price_range is missing, or is less than 2 characters'}, 210
          
             ''' #1: Key code block, setup car OBJECT '''
@@ -41,7 +40,7 @@ class CarAPI:
                       color=color,
                       type=type, 
                       powersource=powersource,
-                      price_range=price_range)
+                      price=price_range)
             
             ''' #2: Key Code block to add car to database '''
             # create car in database
