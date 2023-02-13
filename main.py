@@ -8,12 +8,14 @@ from __init__ import app  # Definitions initialization
 from model.jokes import initJokes
 from model.users import initUsers
 from model.cars import initCars
+from model.carspecs import initCarSpec
 
 # setup APIs
 from api.covid import covid_api # Blueprint import api definition
 from api.joke import joke_api # Blueprint import api definition
 from api.user import user_api # Blueprint import api definition
 from api.car import car_api
+from api.carspec import carspec_api
 
 # setup App pages
 from projects.projects import app_projects # Blueprint directory import projects definition
@@ -23,6 +25,7 @@ app.register_blueprint(joke_api) # register api routes
 app.register_blueprint(covid_api) # register api routes
 app.register_blueprint(user_api) # register api routes
 app.register_blueprint(car_api) # register api routes
+app.register_blueprint(carspec_api) # register api routes
 app.register_blueprint(app_projects) # register app pages
 
 @app.errorhandler(404)  # catch for URL not found
@@ -43,6 +46,7 @@ def activate_job():
     #initJokes()
     initUsers()
     initCars()
+    initCarSpec()
 
 # this runs the application on the development server
 if __name__ == "__main__":
