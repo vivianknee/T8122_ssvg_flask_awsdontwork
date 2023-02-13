@@ -4,7 +4,7 @@ services:
                 image: ssvg_port_v1
                 build: .
                 ports:
-                        - "8123:8086"
+                        - "8123:8080"
                 volumes:
                         - ./volumes:/volumes
                         - ./instance:/instance
