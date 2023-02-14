@@ -40,7 +40,7 @@ class CarAPI:
                       color=color,
                       type=type, 
                       powersource=powersource,
-                      price=price_range)
+                      price_range=price_range)
             
             ''' #2: Key Code block to add car to database '''
             # create car in database
