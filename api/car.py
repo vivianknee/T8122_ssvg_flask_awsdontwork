@@ -1,6 +1,5 @@
 from flask import Blueprint, request, jsonify
 from flask_restful import Api, Resource # used for REST API building
-from datetime import datetime
 
 from model.cars import Car
 
@@ -16,20 +15,32 @@ class CarAPI:
             ''' Read data for json body '''
             body = request.get_json()
             
+            brand = body.get('brand')
+            if brand is None or len(brand) < 2:
+                return {'message': f'brand is missing, or is less than 2 characters'}, 210
+             
+            color = body.get('color')
+            if color is None or len(color) < 2:
+                return {'message': f'color is missing, or is less than 2 characters'}, 210
+            
             type = body.get('type')
             if type is None or len(type) < 2:
                 return {'message': f'type is missing, or is less than 2 characters'}, 210
              
-            model = body.get('model')
-            if model is None or len(model) < 2:
-                return {'message': f'car ID is missing, or is less than 2 characters'}, 210
+            powersource = body.get('powersource')
+            if powersource is None or len(powersource) < 2:
+                return {'message': f'powersource is missing, or is less than 2 characters'}, 210
             
-            price = body.get(price) 
+            price_range = body.get(price_range) 
+            if price_range is None or len(price_range) < 1:
+                return {'message': f'price_range is missing, or is less than 2 characters'}, 210
          
             ''' #1: Key code block, setup car OBJECT '''
-            co = Car(type=type, 
-                      model=model,
-                      price=price)
+            co = Car(brand=brand,
+                      color=color,
+                      type=type, 
+                      powersource=powersource,
+                      price_range=price_range)
             
             ''' #2: Key Code block to add car to database '''
             # create car in database
@@ -38,7 +49,7 @@ class CarAPI:
             if car:
                 return jsonify(car.read())
             # failure returns error
-            return {'message': f'Processed {type}, either a format error or model {model} is duplicate'}, 210
+            return {'message': f'Processed {type}, either a format error or powersource {powersource} is duplicate'}, 210
 
     class _Read(Resource):
         def get(self):
