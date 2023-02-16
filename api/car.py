@@ -32,7 +32,7 @@ class CarAPI:
                 return {'message': f'powersource is missing, or is less than 2 characters'}, 210
             
             pricerange = body.get('pricerange') 
-            if pricerange is None or len(pricerange) < 1:
+            if pricerange is None or len(str(pricerange)) < 1:
                 return {'message': f'pricerange is missing, or is less than 2 characters'}, 210
          
             ''' #1: Key code block, setup car OBJECT '''
