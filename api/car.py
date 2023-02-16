@@ -31,8 +31,8 @@ class CarAPI:
             if powersource is None or len(powersource) < 2:
                 return {'message': f'powersource is missing, or is less than 2 characters'}, 210
             
-            price_range = body.get(price_range) 
-            if price_range is None or len(price_range) < 1:
+            pricerange = body.get('pricerange') 
+            if pricerange is None or len(pricerange) < 1:
                 return {'message': f'price_range is missing, or is less than 2 characters'}, 210
          
             ''' #1: Key code block, setup car OBJECT '''
@@ -40,7 +40,7 @@ class CarAPI:
                       color=color,
                       type=type, 
                       powersource=powersource,
-                      price_range=price_range)
+                      pricerange=pricerange)
             
             ''' #2: Key Code block to add car to database '''
             # create car in database
