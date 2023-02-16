@@ -13,6 +13,7 @@ class Car(db.Model):
 
     # Define the User schema with "vars" from object
     id = db.Column(db.Integer, unique=True, primary_key=True)
+    _image = db.Column(db.String(255), unique=False, nullable=False)
     _brand = db.Column(db.String(255), unique=False, nullable=False)
     _color = db.Column(db.Integer, unique=False, nullable=False)
     _type = db.Column(db.String(255), unique=False, nullable=False)
@@ -21,13 +22,24 @@ class Car(db.Model):
    
 
     # constructor of a User object, initializes the instance variables within object (self)
-    def __init__(self, brand, color, type, powersource, pricerange):
+    def __init__(self, image, brand, color, type, powersource, pricerange):
+        self._image = image
         self._type = type    # variables with self prefix become part of the object, 
         self._brand = brand
         self._color = color
         self._powersource = powersource
         self._pricerange = pricerange
         #self.determine_value()
+
+    # gets the image url the car
+    @property
+    def image(self):
+        return self._image
+    
+    # a setter function, allows image url to be updated after initial object creation
+    @image.setter
+    def image(self, image):
+        self._image = image
 
     # gets the brand the car
     @property
@@ -79,19 +91,6 @@ class Car(db.Model):
     def pricerange(self, pricerange):
         self._pricerange = pricerange
         #self.determine_value() #calls function whenever pricerange of car changes 
-         
-    # @property
-    # def value(self):
-    #     return self._value
-    
-    #determines car value based on pricerange and stores it by assigning it to object
-    def determine_value(self):
-        if self._pricerange > 60000:
-            self._value = "Luxury Car"
-        elif self._pricerange in range(30000, 60000):
-            self._value ="Middle-end Car"
-        else:
-            self._value ="Low-end/Second-hand Car"
             
     # output content using str(object) in human readable form, uses getter
     # output content using json dumps, this is ready for API response
@@ -115,18 +114,20 @@ class Car(db.Model):
     def read(self):
         return {
             "id": self.id,
+            "image": self.image,
             "brand" : self.brand,
             "color" : self.color,
             "type" : self.type,
             "powersource" : self.powersource,
             "pricerange" : self.pricerange
-           # "value" : self.value
         }
 
     # CRUD update: updates user name, password, phone
     # returns self
-    def update(self, brand="", color="", powersource="", type="", pricerange=""):
+    def update(self, image="", brand="", color="", powersource="", type="", pricerange=""):
         """only updates values with length"""
+        if len(image) > 0:
+            self.image = image
         if len(brand) > 0:
             self.brand = brand
         if len(color) > 0:
@@ -164,41 +165,41 @@ def initCars():
             db.session.rollback()
 
         """Tester data for table"""
-        c1 = Car(brand='Acura', color='gray', powersource='ice', type='suv', pricerange='2')
-        c2 = Car(brand='Hyundai', color='red', powersource='ice', type='sedan', pricerange='1') 
-        c3 = Car(brand='Mazda', color='white', powersource='ice', type='sedan', pricerange='1')
-        c4 = Car(brand='Honda', color='gray', powersource='ice', type='suv', pricerange='1')
-        c5 = Car(brand='Dodge', color='black', powersource='ice', type='suv', pricerange='2')
-        c6 = Car(brand='Toyota', color='white', powersource='ice', type='truck', pricerange='2') 
-        c7 = Car(brand='Hyundai', color='blue', powersource='ice', type='sedan', pricerange='1')
-        c8 = Car(brand='Chevrolet', color='gray', powersource='ice', type='truck', pricerange='2')
-        c9 = Car(brand='Jeep', color='gray', powersource='ice', type='suv', pricerange='1')
-        c10 = Car(brand='Nissan', color='silver', powersource='ice', type='sedan', pricerange='1') 
-        c11 = Car(brand='Lexus', color='black', powersource='ice', type='sedan', pricerange='2')
-        c12 = Car(brand='Kia', color='red', powersource='ice', type='suv', pricerange='1')
-        c13 = Car(brand='Mazda', color='red', powersource='ice', type='truck', pricerange='2')
-        c14 = Car(brand='Ford', color='white', powersource='ice', type='sedan', pricerange='2') 
-        c15 = Car(brand='Kia', color='red', powersource='ice', type='truck', pricerange='2')
-        c16 = Car(brand='Ford', color='gray', powersource='ice', type='suv', pricerange='1')
-        c17 = Car(brand='Jeep', color='red', powersource='ice', type='truck', pricerange='1')
-        c18 = Car(brand='Toyota', color='red', powersource='electric', type='suv', pricerange='3') 
-        c19 = Car(brand='Kia', color='red', powersource='ice', type='truck', pricerange='1')
-        c20 = Car(brand='Honda', color='white', powersource='ice', type='suv', pricerange='1')
-        c21 = Car(brand='Hyundai', color='white', powersource='ice', type='sedan', pricerange='1')
-        c22 = Car(brand='Chevrolet', color='white', powersource='ice', type='suv', pricerange='3') 
-        c23 = Car(brand='Jeep', color='white', powersource='ice', type='suv', pricerange='3')
-        c24 = Car(brand='BMW', color='gray', powersource='ice', type='sedan', pricerange='4')
-        c25 = Car(brand='Ferarri', color='yellow', powersource='ice', type='sports', pricerange='4')
-        c26 = Car(brand='Tesla', color='red', powersource='electric', type='suv', pricerange='4') 
-        c27 = Car(brand='Tesla', color='blue', powersource='electric', type='suv', pricerange='4')
-        c28 = Car(brand='Ford', color='white', powersource='electric', type='truck', pricerange='3')
-        c29 = Car(brand='Ford', color='blue', powersource='electric', type='truck', pricerange='4')
-        c30 = Car(brand='Audi', color='black', powersource='electric', type='suv', pricerange='4') 
-        c31 = Car(brand='Porsche', color='red', powersource='electric', type='sports', pricerange='4')
-        c32 = Car(brand='Mercedes', color='silver', powersource='electric', type='sedan', pricerange='4')
-        c33 = Car(brand='Mazda', color='silver', powersource='electric', type='suv', pricerange='2')
-        c34 = Car(brand='Nissan', color='blue', powersource='electric', type='suv', pricerange='2') 
-        c35 = Car(brand='Subaru', color='red', powersource='electric', type='suv', pricerange='2')
+        c1 = Car(image='1', brand='Acura', color='gray', powersource='ice', type='suv', pricerange='2')
+        c2 = Car(image='1', brand='Hyundai', color='red', powersource='ice', type='sedan', pricerange='1') 
+        c3 = Car(image='1', brand='Mazda', color='white', powersource='ice', type='sedan', pricerange='1')
+        c4 = Car(image='1', brand='Honda', color='gray', powersource='ice', type='suv', pricerange='1')
+        c5 = Car(image='1', brand='Dodge', color='black', powersource='ice', type='suv', pricerange='2')
+        c6 = Car(image='1', brand='Toyota', color='white', powersource='ice', type='truck', pricerange='2') 
+        c7 = Car(image='1', brand='Hyundai', color='blue', powersource='ice', type='sedan', pricerange='1')
+        c8 = Car(image='1', brand='Chevrolet', color='gray', powersource='ice', type='truck', pricerange='2')
+        c9 = Car(image='1', brand='Jeep', color='gray', powersource='ice', type='suv', pricerange='1')
+        c10 = Car(image='1', brand='Nissan', color='silver', powersource='ice', type='sedan', pricerange='1') 
+        c11 = Car(image='1', brand='Lexus', color='black', powersource='ice', type='sedan', pricerange='2')
+        c12 = Car(image='1', brand='Kia', color='red', powersource='ice', type='suv', pricerange='1')
+        c13 = Car(image='1', brand='Mazda', color='red', powersource='ice', type='truck', pricerange='2')
+        c14 = Car(image='1', brand='Ford', color='white', powersource='ice', type='sedan', pricerange='2') 
+        c15 = Car(image='1', brand='Kia', color='red', powersource='ice', type='truck', pricerange='2')
+        c16 = Car(image='1', brand='Ford', color='gray', powersource='ice', type='suv', pricerange='1')
+        c17 = Car(image='1', brand='Jeep', color='red', powersource='ice', type='truck', pricerange='1')
+        c18 = Car(image='1', brand='Toyota', color='red', powersource='electric', type='suv', pricerange='3') 
+        c19 = Car(image='1', brand='Kia', color='red', powersource='ice', type='truck', pricerange='1')
+        c20 = Car(image='1', brand='Honda', color='white', powersource='ice', type='suv', pricerange='1')
+        c21 = Car(image='1', brand='Hyundai', color='white', powersource='ice', type='sedan', pricerange='1')
+        c22 = Car(image='1', brand='Chevrolet', color='white', powersource='ice', type='suv', pricerange='3') 
+        c23 = Car(image='1', brand='Jeep', color='white', powersource='ice', type='suv', pricerange='3')
+        c24 = Car(image='1', brand='BMW', color='gray', powersource='ice', type='sedan', pricerange='4')
+        c25 = Car(image='1', brand='Ferarri', color='yellow', powersource='ice', type='sports', pricerange='4')
+        c26 = Car(image='1', brand='Tesla', color='red', powersource='electric', type='suv', pricerange='4') 
+        c27 = Car(image='1', brand='Tesla', color='blue', powersource='electric', type='suv', pricerange='4')
+        c28 = Car(image='1', brand='Ford', color='white', powersource='electric', type='truck', pricerange='3')
+        c29 = Car(image='1', brand='Ford', color='blue', powersource='electric', type='truck', pricerange='4')
+        c30 = Car(image='1', brand='Audi', color='black', powersource='electric', type='suv', pricerange='4') 
+        c31 = Car(image='1', brand='Porsche', color='red', powersource='electric', type='sports', pricerange='4')
+        c32 = Car(image='1', brand='Mercedes', color='silver', powersource='electric', type='sedan', pricerange='4')
+        c33 = Car(image='1', brand='Mazda', color='silver', powersource='electric', type='suv', pricerange='2')
+        c34 = Car(image='1', brand='Nissan', color='blue', powersource='electric', type='suv', pricerange='2') 
+        c35 = Car(image='1', brand='Subaru', color='red', powersource='electric', type='suv', pricerange='2')
 
         cars = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, c34, c35]
 
