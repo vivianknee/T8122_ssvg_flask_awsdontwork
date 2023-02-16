@@ -33,7 +33,7 @@ class CarAPI:
             
             pricerange = body.get('pricerange') 
             if pricerange is None or len(pricerange) < 1:
-                return {'message': f'price_range is missing, or is less than 2 characters'}, 210
+                return {'message': f'pricerange is missing, or is less than 2 characters'}, 210
          
             ''' #1: Key code block, setup car OBJECT '''
             co = Car(brand=brand,
