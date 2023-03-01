@@ -1,4 +1,6 @@
 """ database dependencies to support sqliteDB examples """
+from random import randrange
+import os, base64
 import json
 
 from __init__ import app, db
@@ -167,16 +169,11 @@ class CarSpecs(db.Model):
 # Builds working data for testing
 
 def initCarSpec():
-    """Create database and tables"""
-    db.create_all()
+    with app.app_context():
+        """Create database and tables"""
+        db.create_all()
 
-    try:
-        db.session.query(CarSpecs).delete()
-        db.session.commit()
-    except:
-        db.session.rollback()
-
-    """Tester data for table""" 
+        """Tester data for table""" 
     s1 = CarSpecs(name='Chevrolet Blazer', type='SUV', seatingCapacity='5', powerSource='Gasoline', transmission='Automatic', mileage='b', range='Non-Electric')
     s2 = CarSpecs(name='Chevrolet Blazer EV', type='SUV', seatingCapacity='5', powerSource='Electric', transmission='Automatic', mileage='Non-Gasoline', range='3') 
     s3 = CarSpecs(name='Chevrolet Bolt EV', type='SUV', seatingCapacity='5', powerSource='Electric', transmission='Automatic', mileage='Non-Gasoline', range='Non-Electric')
