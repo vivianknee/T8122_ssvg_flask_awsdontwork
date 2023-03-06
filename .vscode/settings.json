@@ -5,6 +5,7 @@
         "backref",
         "BASI",
         "carspec",
+        "carspecs",
         "executemany",
         "Ferarri",
         "haha",
@@ -13,6 +14,7 @@
         "Lemarr",
         "niko",
         "powersource",
+        "pricerange",
         "sqlalchemy",
         "werkzeug"
     ]

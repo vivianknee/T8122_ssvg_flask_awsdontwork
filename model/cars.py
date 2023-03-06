@@ -13,7 +13,7 @@ class Car(db.Model):
 
     # Define the User schema with "vars" from object
     id = db.Column(db.Integer, unique=True, primary_key=True)
-/mnt/c/Users/Sarah Liu/vscode/T8122_final_ssvg_flask/model/__pycache__    _brand = db.Column(db.String(255), unique=False, nullable=False)
+    _brand = db.Column(db.String(255), unique=False, nullable=False)
     _color = db.Column(db.Integer, unique=False, nullable=False)
     _type = db.Column(db.String(255), unique=False, nullable=False)
     _powersource = db.Column(db.String(255), unique=False, nullable=False)

@@ -15,6 +15,10 @@ class CarAPI:
             ''' Read data for json body '''
             body = request.get_json()
             
+            image = body.get('image')
+            if image is None or len(image) < 2:
+                return {'message': f'image is missing, or is less than 2 characters'}, 210
+
             brand = body.get('brand')
             if brand is None or len(brand) < 2:
                 return {'message': f'brand is missing, or is less than 2 characters'}, 210
@@ -31,16 +35,17 @@ class CarAPI:
             if powersource is None or len(powersource) < 2:
                 return {'message': f'powersource is missing, or is less than 2 characters'}, 210
             
-            price_range = body.get(price_range) 
-            if price_range is None or len(price_range) < 1:
-                return {'message': f'price_range is missing, or is less than 2 characters'}, 210
+            pricerange = body.get('pricerange') 
+            if pricerange is None or len(str(pricerange)) < 1:
+                return {'message': f'pricerange is missing, or is less than 2 characters'}, 210
          
             ''' #1: Key code block, setup car OBJECT '''
-            co = Car(brand=brand,
+            co = Car(image=image,
+                      brand=brand,
                       color=color,
                       type=type, 
                       powersource=powersource,
-                      price_range=price_range)
+                      pricerange=pricerange)
             
             ''' #2: Key Code block to add car to database '''
             # create car in database
