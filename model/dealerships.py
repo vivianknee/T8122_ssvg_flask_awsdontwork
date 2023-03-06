@@ -30,7 +30,7 @@ class Dealership(db.Model):
     def distance(self):
         return self._distance
     
-    # a setter function, allows brand to be updated after initial object creation
+    # a setter function, allows distance to be updated after initial object creation
     @distance.setter
     def distance(self, distance):
         self._distance = distance
@@ -40,12 +40,12 @@ class Dealership(db.Model):
     def zip(self):
         return self._zip
     
-    # a setter function, allows color to be updated after initial object creation
+    # a setter function, allows ZIP to be updated after initial object creation
     @zip.setter
     def zip(self, zip):
         self._zip = zip
     
-    # a powersource getter
+    # a brand getter
     @property
     def brand(self):
         return self._brand

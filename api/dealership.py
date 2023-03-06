@@ -35,7 +35,7 @@ class DealershipAPI:
             ''' #2: Key Code block to add dealership to database '''
             # create dealership in database 
             dealership = co.create()
-            # success returns json of car
+            # success returns json of dealership
             if dealership:
                 return jsonify(dealership.read())
             # failure returns error
