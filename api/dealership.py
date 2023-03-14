@@ -17,20 +17,25 @@ class DealershipAPI:
             
             distance = body.get('distance')
             if distance is None or len(distance) < 2:
-                return {'message': f'brand is missing, or is less than 2 characters'}, 210
+                return {'message': f'distance is missing, or is less than 2 characters'}, 210
              
             zip = body.get('zip')
             if zip is None or len(zip) < 2:
-                return {'message': f'color is missing, or is less than 2 characters'}, 210
+                return {'message': f'zip is missing, or is less than 2 characters'}, 210
              
             brand = body.get('brand')
             if brand is None or len(brand) < 2:
-                return {'message': f'powersource is missing, or is less than 2 characters'}, 210
-         
+                return {'message': f'brand is missing, or is less than 2 characters'}, 210
+            
+            location = body.get('location')
+            if location is None or len(location) < 2:
+                return {'message': f'location is missing, or is less than 2 characters'}, 210
+
             ''' #1: Key code block, setup car OBJECT '''
             co = dealership(distance=distance,
                       zip=zip,
-                      brand=brand)
+                      brand=brand, 
+                      location=location)
             
             ''' #2: Key Code block to add dealership to database '''
             # create dealership in database 

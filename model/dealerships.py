@@ -16,13 +16,15 @@ class Dealership(db.Model):
     _distance = db.Column(db.String(255), unique=False, nullable=False)
     _zip = db.Column(db.Integer, unique=False, nullable=False)
     _brand = db.Column(db.String(255), unique=False, nullable=False)
+    _location = db.Column(db.String(255), unique=False, nullable=False)
    
 
     # constructor of a User object, initializes the instance variables within object (self)
-    def __init__(self, distance, zip, brand):
+    def __init__(self, distance, zip, brand, location):
         self._distance = distance    # variables with self prefix become part of the object, 
         self._zip = zip
         self._brand = brand
+        self._location = location 
         #self.determine_value()
 
     # gets the distance from the dealership
@@ -54,6 +56,14 @@ class Dealership(db.Model):
     @brand.setter
     def brand(self, brand):
         self._brand = brand
+
+    @property
+    def location(self, location):
+        return self._location 
+
+    @brand.setter
+    def location(self, location):
+        self._location = location 
          
     # @property
     # def value(self):
@@ -83,12 +93,13 @@ class Dealership(db.Model):
             "id": self.id,
             "distance" : self.distance,
             "zip" : self.zip,
-            "brand" : self.brand
+            "brand" : self.brand,
+            "location": self.location
         }
 
     # CRUD update: updates user name, password, phone
     # returns self
-    def update(self, distance="", zip="", brand=""):
+    def update(self, distance="", zip="", brand="", location=""):
         """only updates values with length"""
         if len(distance) > 0:
             self.distance = distance
@@ -96,6 +107,8 @@ class Dealership(db.Model):
             self.zip = zip
         if len(brand) > 0:
             self.brand = brand
+        if len(location) > 0:
+            self.location = location
         db.session.commit()
         return self
 
@@ -120,26 +133,23 @@ def initDealerships():
         except:
             db.session.rollback()
 
-        d1 = Dealership(distance='10 miles', zip='92127', brand='honda')
-        d2 = Dealership(distance='10 miles', zip='92127', brand='hyundai')
-        d3 = Dealership(distance='10 miles', zip='92127', brand='toyota')
-        d4 = Dealership(distance='10 miles', zip='92127', brand='chevrolet')
-        d5 = Dealership(distance='10 miles', zip='92127', brand='lexus')
-        d6 = Dealership(distance='10 miles', zip='92127', brand='tesla')
-        d7 = Dealership(distance='10 miles', zip='92127', brand='ferrari')
-        d8 = Dealership(distance='10 miles', zip='92127', brand='mercedes')
-        d9 = Dealership(distance='10 miles', zip='92127', brand='kia')
-        d10 = Dealership(distance='10 miles', zip='92127', brand='mazda')
-        d11 = Dealership(distance='10 miles', zip='92127', brand='nissan')
-        d12 = Dealership(distance='10 miles', zip='92127', brand='jeep')
-        d13 = Dealership(distance='10 miles', zip='92127', brand='acura')
-        d14 = Dealership(distance='10 miles', zip='92127', brand='dodge')
-        d15 = Dealership(distance='10 miles', zip='92127', brand='ford')
-        d16 = Dealership(distance='10 miles', zip='92127', brand='subaru')
-        d17 = Dealership(distance='10 miles', zip='92127', brand='audi')
-        d18 = Dealership(distance='10 miles', zip='92127', brand='BMW')
+        d1 = Dealership(distance='10 miles', zip='92127', brand='honda', location='13747 Poway Road, Poway, CA 92064')
+        d2 = Dealership(distance='10 miles', zip='92127', brand='hyundai', location='13910 Poway Road, Poway, CA 92064')
+        d3 = Dealership(distance='10 miles', zip='92127', brand='toyota', location='13631 Poway Road, Poway, CA 92064')
+        d4 = Dealership(distance='10 miles', zip='92127', brand='chevrolet', location='1550 Auto Park Way, Escondido, CA 92029')
+        d5 = Dealership(distance='10 miles', zip='92127', brand='lexus', location='1205 Auto Park Way, Escondido, CA 92029')
+        d6 = Dealership(distance='10 miles', zip='92127', brand='mercedes', location='855 La Terraza Blvd, ESCONDIDO, CA 92025')
+        d7 = Dealership(distance='10 miles', zip='92127', brand='kia', location='1501 Auto Park Way, Escondido, CA 92029')
+        d8 = Dealership(distance='10 miles', zip='92127', brand='mazda', location='1560 Auto Parkway, Escondido, CA 92029')
+        d9 = Dealership(distance='10 miles', zip='92127', brand='nissan', location='14100 Poway Road, Poway, CA 92064')
+        d10 = Dealership(distance='10 miles', zip='92127', brand='jeep', location='13811 Poway Road, Poway, CA 92064')
+        d11 = Dealership(distance='10 miles', zip='92127', brand='acura', location='1502 Auto Park Way North, Escondido, CA 92029')
+        d12 = Dealership(distance='10 miles', zip='92127', brand='dodge', location='13811 Poway Road, Poway, CA 92064')
+        d13 = Dealership(distance='10 miles', zip='92127', brand='ford', location='12740 Poway Rd, Poway, CA 92064')
+        d14 = Dealership(distance='10 miles', zip='92127', brand='audi', location='1556 Auto Park Way North, Escondido, CA 92029')
+        d15 = Dealership(distance='10 miles', zip='92127', brand='BMW', location='1557 Auto Park Way, Escondido, CA 92029')
 
-        dealerships = [d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17, d18]
+        dealerships = [d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15]
 
         """Builds sample dealership/note(s) data"""
         for dealership in dealerships:
